@@ -31,10 +31,10 @@ ui = fluidPage(
         column(
             3, align = "center",
             selectInput("modelSelectionID", "What models do you want to see in the plot?", multiple = T,
-                        choices = c("Naive" = "modelNaive", "Mean" = "modelMeanf", "Drift" = "modelRwf", "Holt" = "modelHolt",
+                        choices = c("Naive Forecasting" = "modelNaive", "Mean Forecast" = "modelMeanf", "Random Walk Forecast with Drift" = "modelRwf", "Holt's Linear" = "modelHolt",
                                     "Holt-Winters Additive" = "modelHw", "Holt-Winters Multiplicative" = "modelHw2",
                                     "Holt-Winters Multiplicative with Drift" = "modelHw3", "ARIMA" = "modelArima",
-                                    "Linear" = "modelTslm", "Neural Network" = "modelNnetar")),
+                                    "Linear Model" = "modelTslm", "Neural Network" = "modelNnetar")),
         ),
         column(
             3, align = "center",
@@ -99,22 +99,22 @@ server = function(input, output) {
         
         # naive forecasting
         modelNaive = naive(trainData, h = forecastPeriod)
-        output$textNaiveID = renderText({"Naive"})
+        output$textNaiveID = renderText({"Naive Forecasting"})
         output$tableNaiveID = renderTable({accuracy(testData, modelNaive$mean)})
         
         # mean
         modelMeanf = meanf(trainData, h = forecastPeriod)
-        output$textMeanfID = renderText({"Mean"})
+        output$textMeanfID = renderText({"Mean Forecast"})
         output$tableMeanfID = renderTable({accuracy(testData, modelMeanf$mean)})
         
         # drift
         modelRwf = rwf(trainData, h = forecastPeriod, drift = T)
-        output$textRwfID = renderText({"Drift"})
+        output$textRwfID = renderText({"Random Walk Forecast with Drift"})
         output$tableRwfID = renderTable({accuracy(testData, modelRwf$mean)})
         
         # Holt
         modelHolt = holt(trainData, h = forecastPeriod)
-        output$textHoltID = renderText({"Holt"})
+        output$textHoltID = renderText({"Holt's Linear"})
         output$tableHoltID = renderTable({accuracy(testData, modelHolt$mean)})
         
         # Holt-Winters additive
@@ -141,7 +141,7 @@ server = function(input, output) {
         # linear
         modelTslm = tslm(trainData ~ trend, data = trainData)
         modelTslm = forecast(modelTslm, h = forecastPeriod)
-        output$textTslmID = renderText({"Linear"})
+        output$textTslmID = renderText({"Linear Model"})
         output$tableTslmID = renderTable({accuracy(testData, modelTslm$mean)})
         
         # neural network
@@ -167,8 +167,8 @@ server = function(input, output) {
             if ("modelNnetar" %in% mList) lines(modelNnetar$mean, pch = 22, lty = 6, col = "magenta", lwd = 4)
             
             legend("topleft", 
-                   legend = c("Naive", "Mean", "Drift", "Holt", "HW Add.", "HW Mult.",
-                              "HW Mult. Drift", "ARIMA", "Linear", "NN"),
+                   legend = c("Naive", "Mean", "RWF Drift", "Holt's Linear", "HW Add.", "HW Mult.",
+                              "HW Mult. Drift", "ARIMA", "Linear Model", "Neural Network"),
                    col = c("red", "blue", "green", "cyan", "black",
                            "purple", "orangered3", "gold", "chocolate1", "magenta"),
                    cex = 1.4, ncol = 4, lwd = 7
