@@ -8,7 +8,8 @@ ui = fluidPage(
     theme = shinytheme("superhero"),
 
     # Application title.
-    titlePanel(h1(align = "center", "Time Series Forecast Benchmark")),
+    titlePanel(h1(align = "center", "Time Series Forecast Benchmark"),
+               windowTitle = "Time Series Forecast Benchmark"),
     
     br(),
     br(),
