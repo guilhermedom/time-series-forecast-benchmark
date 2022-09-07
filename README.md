@@ -2,7 +2,13 @@
 
 Benchmarking app for time series forecasting methods.
 
-### Features in This App
+---
+
+### Usage
+
+App currently deployed and runnable at: https://domdatascience.shinyapps.io/time-series-forecast-benchmark/
+
+### App Features
 
 Compare different time series forecasting methods using a single plot:
 
